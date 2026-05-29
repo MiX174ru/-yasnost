@@ -6,226 +6,144 @@
     <title>Ясность - Трансформация</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
     <style>
-        body {
-            background-color: #030303;
-            color: #ececec;
-            font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030303 70%);
-        }
-        h1, h2, h3, .serif-font {
-            font-family: 'Cormorant Garamond', serif;
-        }
-        .glowing-ya {
-            font-size: 6rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.2);
-        }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 1.25rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-        .premium-btn {
-            background: linear-gradient(135deg, #e5e5e5 0%, #ffffff 100%);
-            color: #000;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-            transition: transform 0.3s ease;
-        }
-        .premium-btn:active {
-            transform: scale(0.98);
-        }
-        .progress-bar {
-            background: linear-gradient(90deg, #4f46e5 0%, #a855f7 100%);
-            box-shadow: 0 0 10px rgba(168,85,247,0.5);
-        }
-        
-        /* Модальное окно */
-        .modal-bg {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .modal-bg.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-content {
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-        .modal-bg.active .modal-content {
-            transform: translateY(0);
-        }
+        body { background-color: #030303; color: #ececec; font-family: 'Inter', sans-serif; background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030303 70%); overscroll-behavior-y: none; }
+        h1, h2, h3, .serif-font { font-family: 'Cormorant Garamond', serif; }
+        .glowing-ya { font-size: 6rem; font-weight: 700; color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.2); }
+        .glass-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(12px); border-radius: 1.25rem; box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .premium-btn { background: linear-gradient(135deg, #e5e5e5 0%, #ffffff 100%); color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.15); transition: transform 0.3s ease; }
+        .premium-btn:active { transform: scale(0.98); }
+        .progress-bar { background: linear-gradient(90deg, #4f46e5 0%, #a855f7 100%); box-shadow: 0 0 10px rgba(168,85,247,0.5); }
+        .modal-bg { background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 100; }
+        .modal-bg.active { opacity: 1; pointer-events: auto; }
+        .screen { display: none; animation: fadeIn 0.4s ease; }
+        .screen.active { display: flex; flex-direction: column; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-<body class="min-h-screen p-4 flex flex-col items-center pb-20 relative">
+<body class="min-h-screen pb-20 relative">
 
-    <header class="w-full max-w-md flex flex-col items-center mt-6 mb-8">
-        <div class="glowing-ya leading-none mb-1">Я</div>
-        <h1 class="text-2xl tracking-[0.3em] uppercase text-gray-400 font-light">Ясность</h1>
-        
-        <div class="w-full mt-10 px-2">
-            <div class="flex justify-between text-xs text-gray-500 mb-2 uppercase tracking-wider font-light">
-                <span>День 3</span>
-                <span>3/33</span>
+    <div id="landing-screen" class="screen active items-center p-4">
+        <header class="w-full max-w-md flex flex-col items-center mt-12 mb-8 text-center">
+            <div class="glowing-ya leading-none mb-4">Я</div>
+            <h1 class="text-3xl tracking-[0.3em] uppercase text-white font-light mb-2">Ясность</h1>
+            <p class="text-gray-400 font-light tracking-wide">33 дня глубокой трансформации</p>
+        </header>
+        <main class="w-full max-w-md space-y-6">
+            <div class="glass-panel p-6">
+                <h3 class="text-xl serif-font text-white mb-3">Что это такое?</h3>
+                <p class="text-gray-400 text-sm leading-relaxed font-light mb-4">Жесткая система по выходу из выгорания и блоков. 33 дня практик, которые перестроят вашу нейросеть.</p>
+                <ul class="text-gray-300 text-sm space-y-3 font-light">
+                    <li class="flex items-start gap-2"><span class="text-purple-500">❖</span> Очищение пространства и связей</li>
+                    <li class="flex items-start gap-2"><span class="text-purple-500">❖</span> Избавление от глубинных обид</li>
+                </ul>
             </div>
-            <div class="w-full h-[2px] bg-gray-800 rounded-full overflow-hidden">
-                <div class="progress-bar h-full w-[9%]"></div>
+            <div class="pt-4">
+                <button onclick="switchScreen('app-screen')" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Начать (3 дня бесплатно)</button>
             </div>
-        </div>
-    </header>
+            <footer class="mt-12 pt-8 border-t border-gray-800/50 flex flex-col items-center gap-3">
+                <button onclick="switchScreen('legal-screen')" class="text-xs text-gray-500">Пользовательское соглашение</button>
+                <button onclick="switchScreen('legal-screen')" class="text-xs text-gray-500">Политика конфиденциальности</button>
+            </footer>
+        </main>
+    </div>
 
-    <main class="w-full max-w-md space-y-5">
-        
-        <h2 class="text-xs uppercase tracking-[0.2em] text-gray-500 ml-2 font-light">База (Ежедневно)</h2>
-        
-        <div class="glass-panel p-4 flex justify-between items-center cursor-pointer hover:bg-white/5 transition">
-            <div class="flex flex-col">
-                <span class="text-lg serif-font text-gray-200">Дневник благодарности</span>
-                <span class="text-xs text-gray-500 mt-1 font-light">3 события за сегодня</span>
+    <div id="app-screen" class="screen items-center p-4">
+        <div class="w-full max-w-md pt-4">
+            <button onclick="switchScreen('landing-screen')" class="flex items-center gap-2 text-gray-500"><span class="text-xs uppercase tracking-wider">← На главную</span></button>
+        </div>
+        <header class="w-full max-w-md flex flex-col items-center mt-2 mb-8">
+            <div class="text-4xl serif-font text-white mb-1">Я</div>
+            <div class="w-full mt-8 px-2"><div class="w-full h-[2px] bg-gray-800 rounded-full overflow-hidden"><div class="progress-bar h-full w-[9%]"></div></div></div>
+        </header>
+        <main class="w-full max-w-md space-y-5">
+            <div id="btn-gratitude" class="glass-panel p-4 flex justify-between items-center cursor-pointer">
+                <div class="flex flex-col"><span class="text-lg serif-font text-gray-200">Дневник благодарности</span></div>
+                <div id="check-gratitude" class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center"></div>
             </div>
-            <div class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center"></div>
-        </div>
-
-        <div id="open-letter-modal" class="glass-panel p-4 flex justify-between items-center cursor-pointer hover:bg-white/5 transition border-l-2 border-l-purple-500">
-            <div class="flex flex-col">
-                <span class="text-lg serif-font text-gray-200">Письмо прощения</span>
-                <span class="text-xs text-purple-400 mt-1 font-light">Ритуал очищения боли</span>
+            <div id="btn-letter" class="glass-panel p-4 flex justify-between items-center cursor-pointer border-l-2 border-l-purple-500">
+                <div class="flex flex-col"><span class="text-lg serif-font text-gray-200" id="letter-title">Письмо прощения</span><span class="text-xs text-purple-400 mt-1" id="letter-subtitle">Ритуал очищения боли</span></div>
+                <div id="check-letter"><svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg></div>
             </div>
-            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
-        </div>
-
-        <h2 class="text-xs uppercase tracking-[0.2em] text-gray-500 ml-2 mt-8 font-light">Новое задание</h2>
-        
-        <div class="glass-panel p-6 relative overflow-hidden transition-all duration-500" id="task-panel">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="text-xs font-medium px-2 py-1 bg-white/10 rounded text-gray-300 tracking-wider">ДЕНЬ 3</span>
-            </div>
-            
-            <h3 class="text-3xl font-medium mb-3 text-white">Служение пространству</h3>
-            <p class="text-gray-400 text-sm mb-8 leading-relaxed font-light">
-                Уберись на общей территории: подъезд, улица или парк. Без осуждения тех, кто мусорит (бывает, люди разбрасывают, бывает, ветер). 
-                Просто сделай мир вокруг себя чище. Это упражнение убивает гордыню.
-            </p>
-            
-            <button id="act-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">
-                Приступить
-            </button>
-
-            <!-- Поле для отчета -->
-            <div id="proof-ui" class="hidden flex-col mt-4 border-t border-gray-800/50 pt-6">
-                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-3">Доказательство:</label>
-                
-                <div class="w-full border border-dashed border-gray-600 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:border-gray-400 hover:text-gray-300 transition mb-4 bg-black/20">
-                    <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span class="text-xs font-light">Загрузить фото результата</span>
-                </div>
-                
-                <textarea class="w-full bg-black/40 border border-gray-700/50 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-gray-400 h-24 resize-none placeholder-gray-600 font-light" placeholder="Что вы почувствовали?"></textarea>
-                
-                <button id="submit-btn" class="w-full mt-4 py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">
-                    Завершить день
-                </button>
-            </div>
-        </div>
-
-        <!-- Таймер 24 часа -->
-        <div class="glass-panel p-8 text-center hidden flex-col items-center justify-center" id="timer-panel">
-            <svg class="w-12 h-12 text-gray-500 mb-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <h3 class="text-2xl font-medium mb-2 text-white">Задание выполнено</h3>
-            <p class="text-gray-400 text-sm mb-6 font-light">Следующий этап трансформации откроется через:</p>
-            <div class="text-4xl font-light tracking-widest text-white font-mono" id="countdown">24:00:00</div>
-        </div>
-        
-        <div class="mt-10 text-center px-4">
-            <div class="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest text-gray-500 mb-2">Партнер</div>
-            <br>
-            <a href="https://futurevoice.pages.dev/" target="_blank" class="text-sm text-gray-400 hover:text-white transition font-light border-b border-gray-700 pb-0.5">
-                FutureVoice: аудио-аффирмации из будущего
-            </a>
-        </div>
-
-    </main>
-
-    <!-- Модальное окно Письма прощения -->
-    <div id="letter-modal" class="modal-bg fixed inset-0 z-50 flex flex-col justify-end sm:justify-center p-4">
-        <div class="modal-content w-full max-w-md mx-auto bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 relative">
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <h3 class="text-2xl serif-font text-white mb-4">Письмо прощения</h3>
-            
-            <div class="space-y-4 text-sm text-gray-300 font-light leading-relaxed h-[60vh] sm:h-auto overflow-y-auto pr-2">
-                <p><strong class="text-white font-medium">Смысл практики:</strong><br>Обида — это якорь. Ваша задача — выгрузить боль на бумагу.</p>
-                <p><strong class="text-white font-medium">Правила:</strong><br>1. Выберите ОДНОГО человека.<br>2. Пишите каждый день, выплескивая гнев.<br>3. Пишите, пока внутри не появится пустота.</p>
-
-                <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mt-4">
-                    <p class="text-red-400 font-medium mb-2 uppercase text-xs tracking-wider flex items-center gap-2">Ритуал сжигания и безопасность</p>
-                    <p class="text-xs text-red-200/70">
-                        СРАЗУ после написания письмо необходимо сжечь.<br><br>
-                        • Сжигайте ТОЛЬКО над раковиной/унитазом.<br>
-                        • Держите рядом стакан с водой.<br>
-                        • Пепел смойте проточной водой.
-                    </p>
+            <div class="glass-panel p-6 relative overflow-hidden" id="task-panel">
+                <h3 class="text-3xl font-medium mb-3 text-white">Служение пространству</h3>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed font-light">Уберись на общей территории: подъезд, улица или парк. Без осуждения тех, кто мусорит.</p>
+                <button id="act-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Приступить</button>
+                <div id="proof-ui" class="hidden flex-col mt-4 border-t border-gray-800/50 pt-6">
+                    <textarea class="w-full bg-black/40 border border-gray-700/50 rounded-xl p-4 text-sm text-white h-24 mb-4" placeholder="Что вы почувствовали?"></textarea>
+                    <button id="submit-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Завершить день</button>
                 </div>
             </div>
+            <div class="glass-panel p-8 text-center hidden flex-col items-center justify-center" id="timer-panel">
+                <h3 class="text-2xl font-medium mb-2 text-white">Задание выполнено</h3>
+                <div class="text-4xl font-light tracking-widest text-white font-mono" id="countdown">24:00:00</div>
+            </div>
+        </main>
+    </div>
 
-            <button id="mark-done-btn" class="w-full mt-6 py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">
-                Я написал и сжег письмо
-            </button>
+    <div id="legal-screen" class="screen items-center p-4">
+        <div class="w-full max-w-md pt-4 mb-6"><button onclick="switchScreen('landing-screen')" class="text-gray-500">← Назад</button></div>
+        <div class="w-full max-w-md glass-panel p-6"><h2 class="text-2xl text-white mb-6">Оферта и Политика</h2><p class="text-gray-400 text-xs">Раздел подготовлен для модерации ЮKassa.</p></div>
+    </div>
+
+    <div id="gratitude-modal" class="modal-bg fixed inset-0 flex flex-col justify-end sm:justify-center p-4">
+        <div class="w-full max-w-md mx-auto bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 relative">
+            <button onclick="closeModal('gratitude-modal')" class="absolute top-4 right-4 text-gray-500 hover:text-white">X</button>
+            <h3 class="text-2xl text-white mb-6">Дневник благодарности</h3>
+            <div class="space-y-4 mb-6">
+                <input type="text" placeholder="1. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
+                <input type="text" placeholder="2. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
+                <input type="text" placeholder="3. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
+            </div>
+            <button id="save-gratitude" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase">Сохранить</button>
+        </div>
+    </div>
+
+    <div id="letter-modal" class="modal-bg fixed inset-0 flex flex-col justify-end sm:justify-center p-4">
+        <div class="w-full max-w-md mx-auto bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 relative">
+            <button onclick="closeModal('letter-modal')" class="absolute top-4 right-4 text-gray-500 hover:text-white">X</button>
+            <h3 class="text-2xl text-white mb-4">Письмо прощения</h3>
+            <button id="mark-letter-done" class="w-full mt-6 py-4 rounded-xl premium-btn font-semibold text-sm uppercase">Я написал и сжег письмо</button>
         </div>
     </div>
 
     <script>
-        // Модальное окно
-        const modal = document.getElementById('letter-modal');
-        const openBtn = document.getElementById('open-letter-modal');
-        const closeBtn = document.getElementById('close-modal');
-        const markDoneBtn = document.getElementById('mark-done-btn');
+        function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        document.getElementById('btn-gratitude').addEventListener('click', () => openModal('gratitude-modal'));
+        document.getElementById('btn-letter').addEventListener('click', () => openModal('letter-modal'));
+        document.getElementById('save-gratitude').addEventListener('click', () => { closeModal('gratitude-modal'); document.getElementById('check-gratitude').classList.add('bg-purple-500'); });
+        document.getElementById('mark-letter-done').addEventListener('click', () => { closeModal('letter-modal'); document.getElementById('letter-subtitle').innerText = 'Выполнено'; });
 
-        openBtn.addEventListener('click', () => modal.classList.add('active'));
-        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-
-        markDoneBtn.addEventListener('click', () => {
-            modal.classList.remove('active');
-            openBtn.innerHTML = `
-                <div class="flex flex-col opacity-50">
-                    <span class="text-lg serif-font text-gray-200 line-through">Письмо прощения</span>
-                    <span class="text-xs text-gray-500 mt-1 font-light">Выполнено сегодня</span>
-                </div>
-                <div class="w-5 h-5 rounded-full bg-purple-500 flex items-center justify-center text-white">✓</div>
-            `;
-            openBtn.classList.remove('border-l-purple-500');
-        });
-
-        // Задание
-        document.getElementById('act-btn').addEventListener('click', function() {
-            this.classList.add('hidden');
-            document.getElementById('proof-ui').classList.remove('hidden');
-            document.getElementById('proof-ui').classList.add('flex');
-        });
-
+        let timerInterval;
+        function checkTimerState() {
+            const saved = localStorage.getItem('yas_end');
+            if (saved && new Date().getTime() < parseInt(saved)) {
+                document.getElementById('task-panel').classList.add('hidden');
+                document.getElementById('timer-panel').classList.remove('hidden'); document.getElementById('timer-panel').classList.add('flex');
+                startTick(parseInt(saved));
+            } else { localStorage.removeItem('yas_end'); }
+        }
+        function startTick(endTime) {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const dist = endTime - new Date().getTime();
+                if (dist < 0) { clearInterval(timerInterval); localStorage.removeItem('yas_end'); location.reload(); return; }
+                const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((dist % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerText = (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
+            }, 1000);
+        }
+        document.getElementById('act-btn').addEventListener('click', function() { this.classList.add('hidden'); document.getElementById('proof-ui').classList.remove('hidden'); document.getElementById('proof-ui').classList.add('flex'); });
         document.getElementById('submit-btn').addEventListener('click', function() {
             document.getElementById('task-panel').classList.add('hidden');
-            document.getElementById('timer-panel').classList.remove('hidden');
-            document.getElementById('timer-panel').classList.add('flex');
-            
-            let h=23, m=59, s=59;
-            setInterval(function() {
-                s--; if(s<0){s=59;m--;} if(m<0){m=59;h--;}
-                document.getElementById('countdown').innerText = 
-                    (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
-            }, 1000);
+            document.getElementById('timer-panel').classList.remove('hidden'); document.getElementById('timer-panel').classList.add('flex');
+            const endTime = new Date().getTime() + (24*60*60*1000);
+            localStorage.setItem('yas_end', endTime); startTick(endTime);
         });
+        checkTimerState();
     </script>
 </body>
-      </html>
+</html>
