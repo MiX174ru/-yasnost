@@ -1,299 +1,739 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ясность - Трансформация</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-       m[i].l=1*new Date();
-       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+<meta name="theme-color" content="#08080c" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Future Voice — твой день</title>
+<style>
+:root{
+  --bg:#08080c;
+  --bg2:#0f0f17;
+  --surface:rgba(255,255,255,0.04);
+  --surface-2:rgba(255,255,255,0.07);
+  --ink:#f7f7fb;
+  --muted:#8a8a9c;
+  --muted-2:#5a5a6a;
+  --line:rgba(255,255,255,0.08);
+  --accent:#d4af6a;
+  --accent2:#f5d990;
+  --good:#7ee787;
+  --warn:#ffb84d;
+  --bad:#ff7a7a;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.4;overscroll-behavior:none}
+button,a{font:inherit;cursor:pointer;border:none;background:none;color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
-       ym(109508842, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-       });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/109508842" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+/* phone frame for desktop preview */
+.phone{
+  max-width:430px;
+  margin:0 auto;
+  min-height:100vh;
+  background:var(--bg);
+  position:relative;
+  padding-bottom:96px;
+  overflow:hidden;
+}
 
-    <style>
-        body { background-color: #030303; color: #ececec; font-family: 'Inter', sans-serif; background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #030303 70%); overscroll-behavior-y: none; }
-        h1, h2, h3, .serif-font { font-family: 'Cormorant Garamond', serif; }
-        .glowing-ya { font-size: 6rem; font-weight: 700; color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.2); }
-        .glass-panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(12px); border-radius: 1.25rem; box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
-        .premium-btn { background: linear-gradient(135deg, #e5e5e5 0%, #ffffff 100%); color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.15); transition: transform 0.3s ease; }
-        .premium-btn:active { transform: scale(0.98); }
-        .progress-bar { background: linear-gradient(90deg, #4f46e5 0%, #a855f7 100%); box-shadow: 0 0 10px rgba(168,85,247,0.5); transition: width 0.5s ease; }
-        .modal-bg { background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 100; }
-        .modal-bg.active { opacity: 1; pointer-events: auto; }
-        .screen { display: none; animation: fadeIn 0.4s ease; }
-        .screen.active { display: flex; flex-direction: column; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+/* status bar (fake for preview) */
+.status-bar{
+  height:env(safe-area-inset-top,44px);
+  min-height:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  font-size:14px;font-weight:600;
+  padding-top:max(env(safe-area-inset-top,0px),12px);
+}
+
+/* SCREENS */
+.screen{display:none;padding:0 0 24px;animation:fadeIn .25s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* HEADER */
+.head{padding:8px 24px 24px;display:flex;align-items:center;justify-content:space-between}
+.greeting{font-size:13px;color:var(--muted);letter-spacing:.02em;margin-bottom:4px}
+.greeting-name{font-size:22px;font-weight:600;letter-spacing:-0.01em}
+.head-actions{display:flex;gap:8px}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
+.icon-btn svg{width:18px;height:18px}
+
+/* STATE CARD (main today) */
+.state-card{
+  margin:0 20px 20px;
+  padding:28px 24px;
+  background:linear-gradient(160deg,rgba(212,175,106,0.12),rgba(212,175,106,0.03));
+  border:1px solid rgba(212,175,106,0.2);
+  border-radius:24px;
+  position:relative;overflow:hidden;
+}
+.state-card::before{
+  content:"";position:absolute;top:-40%;right:-20%;width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,106,0.25),transparent 70%);
+  pointer-events:none;
+}
+.state-label{font-size:11px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;position:relative}
+.state-value{font-size:48px;font-weight:600;letter-spacing:-0.03em;line-height:1;position:relative;margin-bottom:8px}
+.state-value small{font-size:18px;color:var(--muted);font-weight:400}
+.state-sub{font-size:14px;color:#c5c5d0;position:relative}
+.state-progress{margin-top:20px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;position:relative}
+.state-progress-bar{height:100%;width:62%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .6s ease}
+.state-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--muted);position:relative}
+
+/* TODAY ACTIONS */
+.section-title{padding:4px 24px 12px;font-size:12px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.actions{padding:0 20px;display:flex;flex-direction:column;gap:12px}
+.action-card{
+  padding:18px 18px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:18px;
+  display:flex;align-items:center;gap:14px;
+  transition:transform .15s,background .2s;
+  width:100%;
+  text-align:left;
+}
+.action-card:active{transform:scale(0.98);background:var(--surface-2)}
+.action-card.done{opacity:.5}
+.action-icon{
+  width:46px;height:46px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  background:rgba(212,175,106,0.1);
+}
+.action-icon.morning{background:linear-gradient(135deg,#ffb84d33,#ffb84d11)}
+.action-icon.day{background:linear-gradient(135deg,#7ee78733,#7ee78711)}
+.action-icon.evening{background:linear-gradient(135deg,#9c88ff33,#9c88ff11)}
+.action-icon.night{background:linear-gradient(135deg,#5a8dee33,#5a8dee11)}
+.action-text{flex:1;min-width:0}
+.action-title{font-size:16px;font-weight:500;margin-bottom:3px;letter-spacing:-0.01em}
+.action-meta{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.action-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block}
+.action-go{color:var(--muted);flex-shrink:0}
+.action-go svg{width:18px;height:18px}
+.action-card.done .action-go{color:var(--good)}
+
+/* QUICK BUTTONS */
+.quick-row{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quick-btn{
+  padding:16px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  display:flex;flex-direction:column;gap:6px;
+  text-align:left;
+  transition:background .2s;
+}
+.quick-btn:active{background:var(--surface-2)}
+.quick-btn .qb-icon{font-size:20px;margin-bottom:4px}
+.quick-btn .qb-title{font-size:14px;font-weight:500}
+.quick-btn .qb-sub{font-size:12px;color:var(--muted)}
+.quick-btn.sos{background:linear-gradient(135deg,rgba(255,122,122,0.15),rgba(255,122,122,0.05));border-color:rgba(255,122,122,0.25)}
+.quick-btn.silent{background:linear-gradient(135deg,rgba(138,138,156,0.1),rgba(138,138,156,0.02))}
+
+/* BOTTOM TAB BAR */
+.tabs{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:rgba(8,8,12,0.85);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid var(--line);
+  padding:10px 12px max(env(safe-area-inset-bottom),12px);
+  display:flex;justify-content:space-around;align-items:center;
+  z-index:100;
+}
+.tab{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:8px 4px;
+  color:var(--muted);
+  font-size:10px;letter-spacing:.05em;
+  transition:color .2s;
+}
+.tab svg{width:22px;height:22px}
+.tab.active{color:var(--accent)}
+
+/* === STATE CHECK-IN MODAL === */
+.modal{
+  position:fixed;inset:0;
+  background:rgba(8,8,12,0.85);
+  backdrop-filter:blur(20px);
+  z-index:200;
+  display:none;align-items:flex-end;justify-content:center;
+  animation:fadeIn .2s;
+}
+.modal.active{display:flex}
+.sheet{
+  width:100%;max-width:430px;
+  background:var(--bg2);
+  border-top:1px solid var(--line);
+  border-radius:28px 28px 0 0;
+  padding:24px 24px max(env(safe-area-inset-bottom),28px);
+  animation:slideUp .3s cubic-bezier(.2,.9,.3,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:none}}
+.sheet-handle{width:36px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto 20px}
+.sheet h3{font-size:24px;font-weight:600;letter-spacing:-0.01em;margin-bottom:8px;text-align:center}
+.sheet p{font-size:14px;color:var(--muted);text-align:center;margin-bottom:28px}
+.checkin-buttons{display:flex;flex-direction:column;gap:10px}
+.checkin-btn{
+  padding:18px 20px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  display:flex;align-items:center;gap:14px;text-align:left;
+  transition:all .15s;
+}
+.checkin-btn:active{transform:scale(0.98)}
+.checkin-btn.good{border-color:rgba(126,231,135,0.3)}
+.checkin-btn.good:hover,.checkin-btn.good:active{background:rgba(126,231,135,0.08)}
+.checkin-btn.mid{border-color:rgba(255,184,77,0.3)}
+.checkin-btn.mid:hover,.checkin-btn.mid:active{background:rgba(255,184,77,0.08)}
+.checkin-btn.bad{border-color:rgba(255,122,122,0.3)}
+.checkin-btn.bad:hover,.checkin-btn.bad:active{background:rgba(255,122,122,0.08)}
+.checkin-emoji{font-size:30px;width:46px;text-align:center}
+.checkin-text-wrap{flex:1}
+.checkin-title{font-size:16px;font-weight:500;margin-bottom:2px}
+.checkin-sub{font-size:13px;color:var(--muted)}
+.sheet-close{margin-top:20px;width:100%;padding:14px;color:var(--muted);font-size:14px;text-align:center}
+
+/* === MAP SCREEN === */
+.map-head{padding:20px 24px}
+.map-title{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-bottom:6px}
+.map-sub{font-size:14px;color:var(--muted)}
+.day-pct{
+  margin:8px 20px 20px;
+  padding:24px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  text-align:center;
+}
+.day-pct-value{
+  font-size:72px;font-weight:600;letter-spacing:-0.04em;line-height:1;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:8px;
+}
+.day-pct-label{font-size:14px;color:var(--muted)}
+.day-pct-delta{display:inline-flex;align-items:center;gap:4px;margin-top:10px;font-size:13px;color:var(--good);padding:4px 10px;background:rgba(126,231,135,0.1);border-radius:999px}
+
+/* timeline */
+.timeline{margin:0 20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px}
+.tl-title{font-size:12px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px}
+.tl-bars{display:flex;align-items:flex-end;gap:4px;height:80px;margin-bottom:10px}
+.tl-bar{flex:1;border-radius:3px;min-height:6px;transition:height .4s ease}
+.tl-bar.g{background:linear-gradient(180deg,var(--good),rgba(126,231,135,0.3))}
+.tl-bar.y{background:linear-gradient(180deg,var(--warn),rgba(255,184,77,0.3))}
+.tl-bar.r{background:linear-gradient(180deg,var(--bad),rgba(255,122,122,0.3))}
+.tl-bar.empty{background:rgba(255,255,255,0.04)}
+.tl-hours{display:flex;justify-content:space-between;font-size:11px;color:var(--muted-2);font-variant-numeric:tabular-nums}
+
+/* week chart */
+.week{margin:20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px}
+.week-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.week-row:last-child{border-bottom:none}
+.week-day{width:32px;font-size:13px;color:var(--muted)}
+.week-bar-bg{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden}
+.week-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px}
+.week-pct{width:42px;text-align:right;font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* trigger card */
+.trigger{margin:20px;padding:20px;background:linear-gradient(135deg,rgba(255,122,122,0.08),rgba(255,122,122,0.02));border:1px solid rgba(255,122,122,0.15);border-radius:20px}
+.trigger-label{font-size:11px;color:var(--bad);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.trigger-text{font-size:16px;line-height:1.5;margin-bottom:14px}
+.trigger-action{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--accent);font-weight:500}
+
+/* === VOICE SCREEN === */
+.voice-head{padding:32px 24px 20px;text-align:center}
+.voice-title{font-size:13px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.voice-name{font-size:32px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px}
+.voice-meta{font-size:14px;color:var(--muted)}
+
+.voice-player{margin:24px 20px;padding:32px 24px;background:var(--surface);border:1px solid var(--line);border-radius:24px;text-align:center}
+.voice-visual{
+  width:180px;height:180px;margin:0 auto 28px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--accent2),var(--accent) 50%,#5a3f1c 100%);
+  box-shadow:0 0 60px rgba(212,175,106,0.4),inset 0 0 40px rgba(0,0,0,0.2);
+  position:relative;
+}
+.voice-visual::before,.voice-visual::after{
+  content:"";position:absolute;border-radius:50%;border:1px solid rgba(212,175,106,0.3);
+  animation:ripple 3s infinite;
+}
+.voice-visual::before{inset:-20px;animation-delay:0s}
+.voice-visual::after{inset:-40px;animation-delay:1.5s}
+@keyframes ripple{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.3);opacity:0}}
+
+.voice-controls{display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:20px}
+.voice-ctrl{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--surface-2);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.voice-ctrl:active{background:rgba(255,255,255,0.12)}
+.voice-ctrl.main{
+  width:72px;height:72px;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:var(--bg);box-shadow:0 12px 32px rgba(212,175,106,0.35);
+}
+.voice-ctrl svg{width:22px;height:22px}
+.voice-ctrl.main svg{width:32px;height:32px}
+
+.voice-progress{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.voice-progress-fill{height:100%;width:32%;background:var(--accent);border-radius:2px}
+.voice-time{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.voice-text{margin:0 20px 20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:18px;font-size:15px;line-height:1.7;color:#d5d5e0;font-style:italic;max-height:200px;overflow-y:auto}
+.voice-text::before{content:"«";color:var(--accent);font-size:28px;line-height:0;vertical-align:middle;margin-right:4px}
+.voice-text::after{content:"»";color:var(--accent);font-size:28px;line-height:0;vertical-align:middle;margin-left:4px}
+
+/* path screen */
+.path-head{padding:20px 24px}
+.path-progress{margin:8px 20px 24px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px}
+.path-day-big{font-size:64px;font-weight:600;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+.path-day-big small{font-size:20px;color:var(--muted);font-weight:400}
+.path-stage{font-size:14px;color:var(--accent);margin-bottom:18px}
+.path-line{height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.path-line-fill{height:100%;width:25%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px}
+.path-line-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+.stages{padding:0 20px;display:flex;flex-direction:column;gap:10px}
+.stage{padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:16px;display:flex;align-items:center;gap:14px}
+.stage.current{border-color:rgba(212,175,106,0.4);background:linear-gradient(135deg,rgba(212,175,106,0.08),rgba(212,175,106,0.02))}
+.stage.done{opacity:.5}
+.stage-num{width:36px;height:36px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);flex-shrink:0}
+.stage.current .stage-num{background:linear-gradient(135deg,var(--accent2),var(--accent));color:var(--bg);font-weight:600}
+.stage.done .stage-num{background:rgba(126,231,135,0.15);color:var(--good)}
+.stage-info{flex:1}
+.stage-name{font-size:15px;font-weight:500;margin-bottom:2px}
+.stage-days{font-size:12px;color:var(--muted)}
+
+/* settings */
+.settings-head{padding:20px 24px}
+.settings-list{padding:0 20px;display:flex;flex-direction:column;gap:10px}
+.set-group{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.set-row{display:flex;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.set-row:last-child{border-bottom:none}
+.set-icon{width:32px;height:32px;border-radius:9px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;margin-right:14px;font-size:16px}
+.set-text{flex:1}
+.set-name{font-size:15px;font-weight:500}
+.set-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.toggle{width:46px;height:28px;background:rgba(255,255,255,0.1);border-radius:14px;position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--accent)}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 2px 4px rgba(0,0,0,0.3)}
+.toggle.on::after{left:21px}
+.set-value{font-size:14px;color:var(--muted)}
+
+/* DEMO TAG */
+.demo-tag{
+  position:fixed;top:env(safe-area-inset-top,12px);left:50%;transform:translateX(-50%);
+  margin-top:14px;
+  background:rgba(212,175,106,0.15);
+  border:1px solid rgba(212,175,106,0.3);
+  padding:5px 12px;border-radius:999px;
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);
+  z-index:50;
+  pointer-events:none;
+}
+
+/* PWA-friendly viewport */
+@media (display-mode:standalone){.demo-tag{display:none}}
+
+/* slight desktop styling */
+@media (min-width:760px){
+  body{background:#000;padding:24px 0}
+  .phone{border-radius:48px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.05);min-height:auto;height:900px;overflow-y:auto}
+  .tabs{position:absolute;border-radius:0 0 48px 48px}
+}
+</style>
 </head>
-<body class="min-h-screen pb-20 relative">
+<body>
 
-    <div id="landing-screen" class="screen active items-center p-4">
-        <header class="w-full max-w-md flex flex-col items-center mt-12 mb-8 text-center">
-            <div class="glowing-ya leading-none mb-4">Я</div>
-            <h1 class="text-3xl tracking-[0.3em] uppercase text-white font-light mb-2">Ясность</h1>
-            <p class="text-gray-400 font-light tracking-wide">33 дня глубокой трансформации</p>
-        </header>
-        <main class="w-full max-w-md space-y-6">
-            <div class="glass-panel p-6">
-                <h3 class="text-xl serif-font text-white mb-3">Что это такое?</h3>
-                <p class="text-gray-400 text-sm leading-relaxed font-light mb-4">Это не марафон желаний. Это жесткая система по выходу из выгорания, долгов и ментальных блоков. 33 дня практик, которые перестроят вашу нейросеть.</p>
-                <ul class="text-gray-300 text-sm space-y-3 font-light">
-                    <li class="flex items-start gap-2"><span class="text-purple-500">❖</span> Очищение пространства и связей</li>
-                    <li class="flex items-start gap-2"><span class="text-purple-500">❖</span> Избавление от глубинных обид</li>
-                    <li class="flex items-start gap-2"><span class="text-purple-500">❖</span> Дисциплина и финансовая емкость</li>
-                </ul>
-            </div>
-            <div class="pt-4">
-                <button onclick="switchScreen('app-screen')" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Начать (3 дня бесплатно)</button>
-            </div>
-            <p class="text-center text-xs text-gray-600 font-light mt-4">Далее 1490₽ за полный доступ</p>
-            <footer class="mt-12 pt-8 border-t border-gray-800/50 flex flex-col items-center gap-3">
-                <button onclick="switchScreen('legal-screen')" class="text-xs text-gray-500">Пользовательское соглашение</button>
-                <button onclick="switchScreen('legal-screen')" class="text-xs text-gray-500">Политика конфиденциальности</button>
-            </footer>
-        </main>
+<div class="phone">
+  <div class="demo-tag">Прототип · Future Voice App</div>
+
+  <!-- ========= SCREEN: TODAY ========= -->
+  <section class="screen active" id="screen-today">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="head">
+      <div>
+        <div class="greeting">Доброе утро,</div>
+        <div class="greeting-name">Александр</div>
+      </div>
+      <div class="head-actions">
+        <button class="icon-btn" onclick="openCheckin()" aria-label="Состояние">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9 15c.5.5 1.5 1.5 3 1.5s2.5-1 3-1.5"/></svg>
+        </button>
+        <button class="icon-btn" onclick="show('screen-settings')" aria-label="Настройки">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+      </div>
     </div>
 
-    <div id="app-screen" class="screen items-center p-4">
-        <div class="w-full max-w-md pt-4">
-            <button onclick="switchScreen('landing-screen')" class="flex items-center gap-2 text-gray-500"><span class="text-xs uppercase tracking-wider">← На главную</span></button>
+    <!-- main state card -->
+    <div class="state-card">
+      <div class="state-label">Состояние дня</div>
+      <div class="state-value">62<small>%</small></div>
+      <div class="state-sub">в русле изобилия</div>
+      <div class="state-progress"><div class="state-progress-bar"></div></div>
+      <div class="state-meta">
+        <span>Цель: 95%</span>
+        <span>+12% к вчера</span>
+      </div>
+    </div>
+
+    <div class="section-title">Сегодня</div>
+    <div class="actions">
+      <button class="action-card done" onclick="show('screen-voice')">
+        <div class="action-icon morning">🌅</div>
+        <div class="action-text">
+          <div class="action-title">Утренняя настройка</div>
+          <div class="action-meta"><span>60 сек</span><span class="dot"></span><span>твой голос</span></div>
         </div>
-        <header class="w-full max-w-md flex flex-col items-center mt-2 mb-8">
-            <div class="text-4xl serif-font text-white mb-1">Я</div>
-            <div class="w-full mt-8 px-2">
-                <div class="flex justify-between text-xs text-gray-500 mb-2 uppercase tracking-wider font-light">
-                    <span id="day-counter-text">День 1</span>
-                    <span id="day-counter-num">1/33</span>
-                </div>
-                <div class="w-full h-[2px] bg-gray-800 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="progress-bar h-full w-[3%]"></div>
-                </div>
-            </div>
-        </header>
-        <main class="w-full max-w-md space-y-5 relative">
-            
-            <div id="paywall-overlay" class="absolute inset-0 z-10 bg-black/80 backdrop-blur-sm hidden flex-col items-center justify-center p-6 text-center rounded-2xl border border-gray-800">
-                <h3 class="text-3xl serif-font text-white mb-4">Доступ закрыт</h3>
-                <p class="text-gray-400 text-sm font-light mb-8">Вы прошли 3 базовых дня. Трансформация только начинается. Чтобы открыть оставшиеся 30 дней глубоких практик, оплатите полный доступ.</p>
-                <div class="text-2xl text-white font-medium mb-6">1490 ₽</div>
-                <button id="pay-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Оплатить доступ</button>
-                <p class="text-[10px] text-gray-600 mt-4">Оплата происходит через безопасный шлюз ЮKassa</p>
-            </div>
+        <div class="action-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 6"/></svg></div>
+      </button>
 
-            <div id="btn-gratitude" class="glass-panel p-4 flex justify-between items-center cursor-pointer">
-                <div class="flex flex-col"><span class="text-lg serif-font text-gray-200">Дневник благодарности</span></div>
-                <div id="check-gratitude" class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center"></div>
-            </div>
-            <div id="btn-letter" class="glass-panel p-4 flex justify-between items-center cursor-pointer border-l-2 border-l-purple-500">
-                <div class="flex flex-col"><span class="text-lg serif-font text-gray-200" id="letter-title">Письмо прощения</span><span class="text-xs text-purple-400 mt-1" id="letter-subtitle">Ритуал очищения боли</span></div>
-                <div id="check-letter"><svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg></div>
-            </div>
-            
-            <div class="glass-panel p-6 relative overflow-hidden" id="task-panel">
-                <h3 class="text-3xl font-medium mb-3 text-white" id="task-title">Загрузка...</h3>
-                <p class="text-gray-400 text-sm mb-8 leading-relaxed font-light" id="task-desc">...</p>
-                <button id="act-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Приступить</button>
-                <div id="proof-ui" class="hidden flex-col mt-4 border-t border-gray-800/50 pt-6">
-                    <textarea class="w-full bg-black/40 border border-gray-700/50 rounded-xl p-4 text-sm text-white h-24 mb-4" placeholder="Отчет о выполнении (текст или ссылка на фото)"></textarea>
-                    <button id="submit-btn" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase tracking-widest">Завершить день</button>
-                </div>
-            </div>
-            
-            <div class="glass-panel p-8 text-center hidden flex-col items-center justify-center" id="timer-panel">
-                <h3 class="text-2xl font-medium mb-2 text-white">Задание выполнено</h3>
-                <div class="text-4xl font-light tracking-widest text-white font-mono" id="countdown">24:00:00</div>
-            </div>
-
-            <!-- Партнерская интеграция -->
-            <div class="mt-10 text-center px-4">
-                <div class="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest text-gray-500 mb-2">Интеграция</div><br>
-                <a href="https://futurevoice.pages.dev/" target="_blank" class="text-sm text-gray-400 hover:text-white transition font-light border-b border-gray-700 pb-0.5">
-                    FutureVoice: аудио-аффирмации из будущего
-                </a>
-            </div>
-        </main>
-    </div>
-
-    <div id="legal-screen" class="screen items-center p-4">
-        <div class="w-full max-w-md pt-4 mb-6"><button onclick="switchScreen('landing-screen')" class="text-gray-500">← Назад</button></div>
-        <div class="w-full max-w-md glass-panel p-6"><h2 class="text-2xl text-white mb-6">Оферта и Политика</h2><p class="text-gray-400 text-xs">Раздел подготовлен для модерации ЮKassa. ИНН: [Ваш ИНН]. Самозанятый.</p></div>
-    </div>
-
-    <div id="gratitude-modal" class="modal-bg fixed inset-0 flex flex-col justify-end sm:justify-center p-4">
-        <div class="w-full max-w-md mx-auto bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 relative">
-            <button onclick="closeModal('gratitude-modal')" class="absolute top-4 right-4 text-gray-500">X</button>
-            <h3 class="text-2xl text-white mb-6">Дневник благодарности</h3>
-            <div class="space-y-4 mb-6">
-                <input type="text" placeholder="1. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
-                <input type="text" placeholder="2. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
-                <input type="text" placeholder="3. Я благодарен за..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-4 text-sm text-white">
-            </div>
-            <button id="save-gratitude" class="w-full py-4 rounded-xl premium-btn font-semibold text-sm uppercase">Сохранить</button>
+      <button class="action-card" onclick="openCheckin()">
+        <div class="action-icon day">☀️</div>
+        <div class="action-text">
+          <div class="action-title">Дневной чек-ин</div>
+          <div class="action-meta"><span>10 сек</span><span class="dot"></span><span>2 из 4</span></div>
         </div>
-    </div>
+        <div class="action-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      </button>
 
-    <div id="letter-modal" class="modal-bg fixed inset-0 flex flex-col justify-end sm:justify-center p-4">
-        <div class="w-full max-w-md mx-auto bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 relative">
-            <button onclick="closeModal('letter-modal')" class="absolute top-4 right-4 text-gray-500">X</button>
-            <h3 class="text-2xl text-white mb-4">Письмо прощения</h3>
-            <div class="text-sm text-gray-300 font-light mb-4"><p>Пишите ОДНОМУ человеку каждый день, пока не наступит пустота. Сжигайте СРАЗУ над раковиной.</p></div>
-            <button id="mark-letter-done" class="w-full mt-2 py-4 rounded-xl premium-btn font-semibold text-sm uppercase">Я написал и сжег письмо</button>
+      <button class="action-card" onclick="show('screen-voice')">
+        <div class="action-icon evening">🌆</div>
+        <div class="action-text">
+          <div class="action-title">Вечерняя интеграция</div>
+          <div class="action-meta"><span>10 мин</span><span class="dot"></span><span>после 21:00</span></div>
         </div>
+        <div class="action-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      </button>
+
+      <button class="action-card" onclick="show('screen-voice')">
+        <div class="action-icon night">🌙</div>
+        <div class="action-text">
+          <div class="action-title">Письмо из будущего</div>
+          <div class="action-meta"><span>8 мин</span><span class="dot"></span><span>перед сном</span></div>
+        </div>
+        <div class="action-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      </button>
     </div>
 
-    <script>
-                function switchScreen(id) { 
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
-            document.getElementById(id).classList.add('active'); 
-            window.scrollTo(0,0); 
-            if (id === 'app-screen') localStorage.setItem('yas_started', 'true');
-        }
+    <div class="quick-row">
+      <button class="quick-btn sos">
+        <div class="qb-icon">🆘</div>
+        <div class="qb-title">Кризисный протокол</div>
+        <div class="qb-sub">Вернуться в ресурс за 60 сек</div>
+      </button>
+      <button class="quick-btn silent">
+        <div class="qb-icon">🤫</div>
+        <div class="qb-title">Тихий режим</div>
+        <div class="qb-sub">До конца дня</div>
+      </button>
+    </div>
+  </section>
 
-        // При загрузке страницы проверяем, нажимал ли человек "Начать"
-        if (localStorage.getItem('yas_started') === 'true') {
-            document.getElementById('landing-screen').classList.remove('active');
-            document.getElementById('app-screen').classList.add('active');
-        }
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-        
-        document.getElementById('btn-gratitude').addEventListener('click', () => openModal('gratitude-modal'));
-        document.getElementById('btn-letter').addEventListener('click', () => openModal('letter-modal'));
-        document.getElementById('save-gratitude').addEventListener('click', () => { closeModal('gratitude-modal'); document.getElementById('check-gratitude').classList.add('bg-purple-500'); });
-        document.getElementById('mark-letter-done').addEventListener('click', () => { closeModal('letter-modal'); document.getElementById('letter-subtitle').innerText = 'Выполнено'; });
+  <!-- ========= SCREEN: MAP (mind map) ========= -->
+  <section class="screen" id="screen-map">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="map-head">
+      <div class="map-title">Карта мышления</div>
+      <div class="map-sub">Твой день в данных</div>
+    </div>
 
-        // --- БАЗА ЗАДАНИЙ (с красивыми описаниями) ---
-        const tasks = [
-            { day: 1, title: "Очищение энергии", desc: "Старые вещи удерживают застоявшуюся энергию. Ваша задача на сегодня — выбросить или выставить на Авито ровно 9 старых или ненужных вещей. Физическое расхламление запускает процесс ментального очищения." },
-            { day: 2, title: "40 минут тишины", desc: "Наш мозг перегружен дофамином от соцсетей. Отключите телефон, закройте дверь. Сядьте в абсолютной тишине на 40 минут. Это будет дискомфортно. Позвольте этому быть. После завершения запишите свои мысли." },
-            { day: 3, title: "Служение пространству", desc: "Уберись на общей территории: подъезд, улица или парк. Сделайте это молча и без осуждения тех, кто мусорит. Это мощнейшая стоическая практика, которая убивает гордыню — главного врага роста." },
-            { day: 4, title: "Письмо из будущего", desc: "Представьте, что прошло 5 лет. Вы достигли всего. Напишите себе письмо из этой точки. Опишите свой день, свой счет в банке, свое состояние. (Для максимального эффекта запишите его в FutureVoice, чтобы слушать каждый день)." },
-            { day: 5, title: "Разговор с зеркалом", desc: "Мы часто ругаем себя за ошибки прошлого. Поставьте таймер на 10 минут. Смотрите себе в глаза в зеркале, ничего не говоря. Как только время выйдет, скажите вслух: «Я прощаю тебя за все. Мы идем дальше»." },
-            { day: 6, title: "Закон отдачи", desc: "Бедность — это мышление дефицита. Чтобы разорвать этот шаблон, отдайте сегодня что-то безвозмездно. Оставьте слишком большие чаевые, оплатите кофе стоящему сзади, или переведите деньги на лечение. Сделайте это искренне." },
-            { day: 7, title: "Финансовая правда", desc: "Страх неизвестности высасывает силы. Сядьте с листом бумаги. Выпишите ВСЕ свои долги, пассивы и активы. Посмотрите правде в глаза. Мозг боится тумана, но успокаивается, когда видит точные цифры." },
-            { day: 8, title: "Информационная тишина", desc: "Токсичное окружение заражает вас. Проведите ревизию соцсетей. Отпишитесь от всех блогеров, каналов и знакомых, которые вызывают у вас тревогу, зависть или транслируют негатив. Оставьте только чистый эфир." },
-            { day: 9, title: "Безусловный подарок", desc: "Сегодня вам нужно отдать одну ценную для вас вещь тому человеку, которому она сейчас нужнее. Это упражнение отрывает вас от материальной привязанности и расширяет вашу финансовую емкость." },
-            { day: 10, title: "День без жалоб", desc: "Жалобы — это позиция жертвы. Следующие 24 часа вам запрещено жаловаться на погоду, людей, цены или правительство. Если вы пожаловались вслух — обнуляйте день и начинайте заново." }
-        ];
+    <div class="day-pct">
+      <div class="day-pct-value">62%</div>
+      <div class="day-pct-label">времени в русле изобилия</div>
+      <div class="day-pct-delta">↑ 12% к вчера</div>
+    </div>
 
-        let currentDay = parseInt(localStorage.getItem('yas_current_day')) || 1;
-        let hasPaid = localStorage.getItem('yas_has_paid') === 'true'; 
-        
-        function renderDay() {
-            if (currentDay >= 4 && !hasPaid) {
-                document.getElementById('paywall-overlay').classList.remove('hidden');
-                document.getElementById('paywall-overlay').classList.add('flex');
-            }
+    <div class="timeline">
+      <div class="tl-title">Часы дня</div>
+      <div class="tl-bars">
+        <div class="tl-bar g" style="height:70%"></div>
+        <div class="tl-bar g" style="height:85%"></div>
+        <div class="tl-bar y" style="height:55%"></div>
+        <div class="tl-bar r" style="height:30%"></div>
+        <div class="tl-bar r" style="height:25%"></div>
+        <div class="tl-bar y" style="height:50%"></div>
+        <div class="tl-bar g" style="height:75%"></div>
+        <div class="tl-bar g" style="height:80%"></div>
+        <div class="tl-bar g" style="height:90%"></div>
+        <div class="tl-bar y" style="height:60%"></div>
+        <div class="tl-bar empty" style="height:20%"></div>
+        <div class="tl-bar empty" style="height:20%"></div>
+      </div>
+      <div class="tl-hours">
+        <span>7</span><span>9</span><span>11</span><span>13</span><span>15</span><span>17</span><span>19</span><span>21</span>
+      </div>
+    </div>
 
-            let task = tasks.find(t => t.day === currentDay);
-            if(!task) task = tasks[0];
+    <div class="trigger">
+      <div class="trigger-label">⚠ Обнаружен триггер</div>
+      <div class="trigger-text">Между 13:00 и 15:00 ты дважды провалился в состояние тревоги. Похоже, это связано с проверкой почты после обеда.</div>
+      <button class="trigger-action">Разобрать триггер <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
 
-            document.getElementById('day-counter-text').innerText = `День ${currentDay}`;
-            document.getElementById('day-counter-num').innerText = `${currentDay}/33`;
-            document.getElementById('progress-bar').style.width = `${(currentDay / 33) * 100}%`;
-            
-            document.getElementById('task-title').innerText = task.title;
-            document.getElementById('task-desc').innerText = task.desc;
-        }
+    <div class="week">
+      <div class="tl-title" style="margin-bottom:14px">Неделя</div>
+      <div class="week-row"><div class="week-day">Пн</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:48%"></div></div><div class="week-pct">48%</div></div>
+      <div class="week-row"><div class="week-day">Вт</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:55%"></div></div><div class="week-pct">55%</div></div>
+      <div class="week-row"><div class="week-day">Ср</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:42%"></div></div><div class="week-pct">42%</div></div>
+      <div class="week-row"><div class="week-day">Чт</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:60%"></div></div><div class="week-pct">60%</div></div>
+      <div class="week-row"><div class="week-day">Пт</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:50%"></div></div><div class="week-pct">50%</div></div>
+      <div class="week-row"><div class="week-day">Сб</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:72%"></div></div><div class="week-pct">72%</div></div>
+      <div class="week-row"><div class="week-day">Вс</div><div class="week-bar-bg"><div class="week-bar-fill" style="width:62%"></div></div><div class="week-pct">62%</div></div>
+    </div>
+  </section>
 
-        let timerInterval;
-        function checkTimerState() {
-            const saved = localStorage.getItem('yas_end');
-            if (saved && new Date().getTime() < parseInt(saved)) {
-                document.getElementById('task-panel').classList.add('hidden');
-                document.getElementById('timer-panel').classList.remove('hidden'); document.getElementById('timer-panel').classList.add('flex');
-                startTick(parseInt(saved));
-            } else { 
-                localStorage.removeItem('yas_end'); 
-                renderDay();
-            }
-        }
-        
-        function startTick(endTime) {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                const dist = endTime - new Date().getTime();
-                if (dist < 0) { 
-                    clearInterval(timerInterval); 
-                    localStorage.removeItem('yas_end'); 
-                    currentDay++;
-                    localStorage.setItem('yas_current_day', currentDay);
-                    location.reload(); 
-                    return; 
-                }
-                const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((dist % (1000 * 60)) / 1000);
-                document.getElementById('countdown').innerText = (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
-            }, 1000);
-        }
+  <!-- ========= SCREEN: VOICE ========= -->
+  <section class="screen" id="screen-voice">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="voice-head">
+      <div class="voice-title">Письмо из будущего</div>
+      <div class="voice-name">Утро в новом доме</div>
+      <div class="voice-meta">8 мин · твой голос · день 22 из 90</div>
+    </div>
 
-        document.getElementById('act-btn').addEventListener('click', function() { 
-            this.classList.add('hidden'); 
-            document.getElementById('proof-ui').classList.remove('hidden'); 
-            document.getElementById('proof-ui').classList.add('flex'); 
-        });
+    <div class="voice-player">
+      <div class="voice-visual"></div>
+      <div class="voice-controls">
+        <button class="voice-ctrl" aria-label="-15">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 7v5h5"/></svg>
+        </button>
+        <button class="voice-ctrl main" id="playMain" aria-label="Play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="voice-ctrl" aria-label="+15">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 7v5h-5"/></svg>
+        </button>
+      </div>
+      <div class="voice-progress"><div class="voice-progress-fill"></div></div>
+      <div class="voice-time"><span>2:34</span><span>8:00</span></div>
+    </div>
 
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            document.getElementById('task-panel').classList.add('hidden');
-            document.getElementById('timer-panel').classList.remove('hidden'); document.getElementById('timer-panel').classList.add('flex');
-            document.getElementById('check-gratitude').classList.remove('bg-purple-500');
-            document.getElementById('letter-subtitle').innerText = 'Ритуал очищения боли';
+    <div class="voice-text">
+      Привет. Это я, говорю с тобой из 30 мая 2027 года. Прошёл ровно год.
+      Я хочу, чтобы ты знал — у нас всё получилось. Помнишь, сегодня ты переживал из-за того клиента? Это оказалось неважно. Через три недели пришёл другой, гораздо лучше.
+      Сейчас я смотрю в окно нового дома. Утро. Тихо. Я работаю с теми, с кем хочу. Денег достаточно — даже больше, чем мы мечтали.
+      Знаешь, что было самым важным? Что ты не сдался в эти первые недели. Что ты продолжал держать фокус.
+      Спокойной ночи. Всё уже хорошо. Я тебя жду здесь.
+    </div>
+  </section>
 
-            // ТАЙМЕР. Сейчас стоит 15 секунд для тестирования. 
-            // Для боевого запуска заменить 15 * 1000 на 24 * 60 * 60 * 1000
-            const endTime = new Date().getTime() + (15 * 1000);
-            localStorage.setItem('yas_end', endTime); startTick(endTime);
-        });
+  <!-- ========= SCREEN: PATH ========= -->
+  <section class="screen" id="screen-path">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="path-head">
+      <div class="map-title">Твой путь</div>
+      <div class="map-sub">90 дней перепрошивки</div>
+    </div>
 
-        // --- ЛОГИКА ОПЛАТЫ ЮKASSA ---
-        if (window.location.search.includes('payment=success')) {
-            localStorage.setItem('yas_has_paid', 'true');
-            hasPaid = true;
-            window.history.replaceState({}, document.title, "/"); 
-            alert('Оплата успешно получена! Доступ ко всем дням открыт. Трансформация продолжается.');
-            document.getElementById('paywall-overlay').classList.add('hidden');
-            document.getElementById('paywall-overlay').classList.remove('flex');
-            renderDay();
-        }
+    <div class="path-progress">
+      <div class="path-day-big">22<small> / 90</small></div>
+      <div class="path-stage">Этап 2 · Удержание состояния</div>
+      <div class="path-line"><div class="path-line-fill" style="width:24%"></div></div>
+      <div class="path-line-meta"><span>68 дней впереди</span><span>24%</span></div>
+    </div>
 
-        document.getElementById('pay-btn').addEventListener('click', async function() {
-            const btn = this;
-            btn.innerText = 'Создание платежа...';
-            btn.style.opacity = '0.5';
-            
-            try {
-                const response = await fetch('/api/payment', { method: 'POST' });
-                const data = await response.json();
-                
-                if (data.confirmation && data.confirmation.confirmation_url) {
-                    window.location.href = data.confirmation.confirmation_url;
-                } else {
-                    alert('Ошибка создания платежа. Попробуйте еще раз.');
-                    btn.innerText = 'Оплатить доступ'; btn.style.opacity = '1';
-                }
-            } catch (err) {
-                alert('Ошибка соединения с сервером.');
-                btn.innerText = 'Оплатить доступ'; btn.style.opacity = '1';
-            }
-        });
+    <div class="section-title">Этапы пути</div>
+    <div class="stages">
+      <div class="stage done">
+        <div class="stage-num">✓</div>
+        <div class="stage-info">
+          <div class="stage-name">Чистка фонового потока</div>
+          <div class="stage-days">Дни 1–14 · завершено</div>
+        </div>
+      </div>
+      <div class="stage current">
+        <div class="stage-num">2</div>
+        <div class="stage-info">
+          <div class="stage-name">Удержание состояния</div>
+          <div class="stage-days">Дни 15–30 · сейчас здесь</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">3</div>
+        <div class="stage-info">
+          <div class="stage-name">Работа с триггерами</div>
+          <div class="stage-days">Дни 31–60</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">4</div>
+        <div class="stage-info">
+          <div class="stage-name">Новая идентичность</div>
+          <div class="stage-days">Дни 61–90</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">★</div>
+        <div class="stage-info">
+          <div class="stage-name">Инициация</div>
+          <div class="stage-days">День 90 · переход</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        checkTimerState();
-    </script>
+  <!-- ========= SCREEN: SETTINGS ========= -->
+  <section class="screen" id="screen-settings">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="settings-head">
+      <div class="map-title">Настройки</div>
+      <div class="map-sub">Подстрой приложение под себя</div>
+    </div>
+    <div class="settings-list">
+      <div class="set-group">
+        <div class="set-row">
+          <div class="set-icon">🔔</div>
+          <div class="set-text"><div class="set-name">Дневные чек-ины</div><div class="set-desc">4 раза в день в удобные моменты</div></div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="set-row">
+          <div class="set-icon">🔇</div>
+          <div class="set-text"><div class="set-name">Беззвучный режим</div><div class="set-desc">Уведомления только текстом</div></div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="set-row">
+          <div class="set-icon">💼</div>
+          <div class="set-text"><div class="set-name">Рабочие часы</div><div class="set-desc">Минимум касаний</div></div>
+          <div class="set-value">9:00–18:00</div>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-row">
+          <div class="set-icon">🎙</div>
+          <div class="set-text"><div class="set-name">Твой голос</div><div class="set-desc">Записан · готов к использованию</div></div>
+          <div class="set-value" style="color:var(--good)">●</div>
+        </div>
+        <div class="set-row">
+          <div class="set-icon">🎵</div>
+          <div class="set-text"><div class="set-name">Фоновая музыка</div><div class="set-desc">Подложка для писем</div></div>
+          <div class="set-value">Альфа · 8Hz</div>
+        </div>
+        <div class="set-row">
+          <div class="set-icon">🌙</div>
+          <div class="set-text"><div class="set-name">Время сна</div><div class="set-desc">Когда играть письмо</div></div>
+          <div class="set-value">22:30</div>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-row">
+          <div class="set-icon">🔒</div>
+          <div class="set-text"><div class="set-name">Приватность</div><div class="set-desc">Голос хранится только у тебя</div></div>
+          <div class="set-value">→</div>
+        </div>
+        <div class="set-row">
+          <div class="set-icon">💎</div>
+          <div class="set-text"><div class="set-name">Подписка Pro</div><div class="set-desc">Активна до 30.06.2026</div></div>
+          <div class="set-value" style="color:var(--accent)">Pro</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= CHECK-IN MODAL ========= -->
+  <div class="modal" id="checkin">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3>О чём ты думал<br/>последние 5 минут?</h3>
+      <p>Один тап — и продолжай свой день.</p>
+      <div class="checkin-buttons">
+        <button class="checkin-btn good" onclick="closeCheckin()">
+          <div class="checkin-emoji">🌱</div>
+          <div class="checkin-text-wrap">
+            <div class="checkin-title">В русле изобилия</div>
+            <div class="checkin-sub">Возможности, благодарность, рост</div>
+          </div>
+        </button>
+        <button class="checkin-btn mid" onclick="closeCheckin()">
+          <div class="checkin-emoji">⚖️</div>
+          <div class="checkin-text-wrap">
+            <div class="checkin-title">Нейтрально</div>
+            <div class="checkin-sub">Просто задачи, без эмоций</div>
+          </div>
+        </button>
+        <button class="checkin-btn bad" onclick="closeCheckin()">
+          <div class="checkin-emoji">🌧</div>
+          <div class="checkin-text-wrap">
+            <div class="checkin-title">В русле проблем</div>
+            <div class="checkin-sub">Тревога, долги, обиды, страх</div>
+          </div>
+        </button>
+      </div>
+      <button class="sheet-close" onclick="closeCheckin()">Позже</button>
+    </div>
+  </div>
+
+  <!-- ========= TAB BAR ========= -->
+  <nav class="tabs">
+    <button class="tab active" onclick="show('screen-today',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+      <span>Сегодня</span>
+    </button>
+    <button class="tab" onclick="show('screen-map',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18l6-3 6 3 6-3V6l-6 3-6-3-6 3z"/></svg>
+      <span>Карта</span>
+    </button>
+    <button class="tab" onclick="show('screen-voice',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      <span>Голос</span>
+    </button>
+    <button class="tab" onclick="show('screen-path',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span>Путь</span>
+    </button>
+    <button class="tab" onclick="show('screen-settings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.7l2-1.5-2-3.4-2.3 1a7 7 0 0 0-3-1.7L13 2h-4l-.5 2.7a7 7 0 0 0-3 1.7l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 3 12c0 .6.1 1.1.2 1.7l-2 1.5 2 3.4 2.3-1c.9.8 1.9 1.3 3 1.7L9 22h4l.5-2.7c1.1-.4 2.1-.9 3-1.7l2.3 1 2-3.4-2-1.5c.1-.6.2-1.1.2-1.7z"/></svg>
+      <span>Ещё</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+function show(id, el){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(el){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+  }
+  // map screen->tab
+  const map={'screen-today':0,'screen-map':1,'screen-voice':2,'screen-path':3,'screen-settings':4};
+  if(map[id]!==undefined && !el){
+    document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===map[id]));
+  }
+  window.scrollTo(0,0);
+}
+function openCheckin(){document.getElementById('checkin').classList.add('active')}
+function closeCheckin(){document.getElementById('checkin').classList.remove('active')}
+document.getElementById('checkin').addEventListener('click',(e)=>{
+  if(e.target.id==='checkin')closeCheckin();
+});
+
+// play button toggle
+const playMain=document.getElementById('playMain');
+let playing=false;
+const playIcons={
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>'
+};
+playMain.addEventListener('click',()=>{
+  playing=!playing;
+  playMain.innerHTML=playing?playIcons.pause:playIcons.play;
+});
+</script>
 </body>
 </html>
