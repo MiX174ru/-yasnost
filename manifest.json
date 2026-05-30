@@ -1,0 +1,15 @@
+{
+  "name": "Future Voice",
+  "short_name": ""YaYasnost"",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#08080c",
+  "theme_color": "#d4af6a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
