@@ -157,7 +157,18 @@
     </div>
 
     <script>
-        function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+                function switchScreen(id) { 
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
+            document.getElementById(id).classList.add('active'); 
+            window.scrollTo(0,0); 
+            if (id === 'app-screen') localStorage.setItem('yas_started', 'true');
+        }
+
+        // При загрузке страницы проверяем, нажимал ли человек "Начать"
+        if (localStorage.getItem('yas_started') === 'true') {
+            document.getElementById('landing-screen').classList.remove('active');
+            document.getElementById('app-screen').classList.add('active');
+        }
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
         
