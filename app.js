@@ -1,4 +1,4 @@
-// "Я Ясность v2" - Full implementation
+// ""Я Ясность — Полностью платное приложение"" - Full implementation
 let state = {
   checkins: JSON.parse(localStorage.getItem('fv_checkins') || '[]'),
   voiceRecordings: JSON.parse(localStorage.getItem('fv_voices') || '[]'),
@@ -160,9 +160,24 @@ function init() {
   
   updateTodayScreen();
   
-  // PWA install prompt (optional)
+  "// Paywall logic
+  const isPaid = localStorage.getItem('yasnost_paid') === 'true';
+  if (!isPaid) {
+    document.getElementById('paywall').style.display = 'block';
+  }
+
+  // PWA install prompt (optional)"
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+}
+
+function payWithYooKassa() {
+  const confirmed = confirm('Оплатить подписку Pro за 1490 ₽ через ЮKassa?');
+  if (confirmed) {
+    // В реальном приложении здесь будет ссылка на платёж ЮKassa
+    alert('Перенаправление на страницу оплаты ЮKassa...\n(В реальной версии сюда подставляется ссылка на платёж)');
+    // Пример: window.location.href = 'https://yookassa.ru/...';
   }
 }
 
