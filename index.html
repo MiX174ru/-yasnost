@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#08080c" />
+<title>ЯСНОСТЬ — Твой разум в русле изобилия</title>
+<style>
+:root {
+  --bg: #08080c;
+  --bg2: #0f0f17;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --ink: #f7f7fb;
+  --muted: #8a8a9c;
+  --muted-2: #5a5a6a;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #d4af6a;
+  --accent2: #f5d990;
+  --good: #7ee787;
+  --warn: #ffb84d;
+  --bad: #ff7a7a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* CONTAINER */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,8,12,0.85);
+}
+.header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tagline {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #08080c;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.header-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212, 175, 106, 0.3);
+}
+
+/* HERO SECTION */
+.hero {
+  padding: 80px 0 80px;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,106,0.12), transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: center;
+}
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-left {
+    order: 1;
+  }
+  .hero-right {
+    order: 2;
+    margin: 20px auto 0;
+  }
+  .hero {
+    padding: 30px 0 30px; /* Сильно сократили отступы, чтобы убрать пустоты */
+  }
+  .hero-title {
+    font-size: 26px !important; /* Уменьшили размер шрифта */
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .hero-desc {
+    font-size: 14px !important;
+    margin-bottom: 24px;
+  }
+  .badge {
+    margin-bottom: 16px;
+    padding: 4px 12px;
+    font-size: 10px;
+  }
+  .cta-group {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .main-btn, .sub-btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+.badge {
+  background: rgba(212, 175, 106, 0.08);
+  border: 1px solid rgba(212, 175, 106, 0.2);
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.hero-title {
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+@media (max-width: 600px) {
+  .hero-title { font-size: 32px; }
+}
+.hero-title span {
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-desc {
+  font-size: 17px;
+  color: #c5c5d0;
+  margin-bottom: 36px;
+  max-width: 580px;
+}
+@media (max-width: 960px) {
+  .hero-desc { margin-left: auto; margin-right: auto; }
+}
+.cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+@media (max-width: 960px) {
+  .cta-group { justify-content: center; flex-direction: column; }
+}
+.main-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #08080c;
+  padding: 18px 36px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 30px rgba(212, 175, 106, 0.15);
+}
+.main-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(212, 175, 106, 0.3);
+}
+.sub-btn {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 18px 30px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sub-btn:hover {
+  background: var(--surface-2);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* PHONE PREVIEW FRAME */
+.phone-mockup {
+  width: 100%;
+  max-width: 340px;
+  height: 680px;
+  border-radius: 44px;
+  background: #000;
+  border: 10px solid rgba(255,255,255,0.06);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(212,175,106,0.08);
+  overflow: hidden;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .phone-mockup {
+    height: 440px; /* Компактная высота на мобильных экранах */
+    max-width: 260px; /* Пропорциональная ширина */
+    border: 6px solid rgba(255,255,255,0.06);
+    border-radius: 32px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,106,0.05);
+  }
+}
+.phone-screen-img {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--bg);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* HOW IT WORKS SECTION */
+.how-it-works {
+  padding: 90px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.section-tag {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.section-title-big {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .why-grid { grid-template-columns: 1fr; }
+}
+.why-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+.why-text {
+  font-size: 16px;
+  color: #a9a9b8;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+.why-text b {
+  color: var(--ink);
+}
+.scientific-fact {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  padding: 24px;
+  border-radius: 0 20px 20px 0;
+  font-size: 14px;
+  color: #c5c5d0;
+  line-height: 1.6;
+}
+
+/* COMPARISON VS */
+.vs-section {
+  padding: 90px 0;
+}
+.vs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .vs-grid { grid-template-columns: 1fr; }
+}
+.vs-card {
+  padding: 40px;
+  border-radius: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.vs-card.bad-card {
+  border-color: rgba(255, 122, 122, 0.12);
+  background: linear-gradient(180deg, rgba(255, 122, 122, 0.02), transparent);
+}
+.vs-card.good-card {
+  border-color: rgba(212, 175, 106, 0.2);
+  background: linear-gradient(180deg, rgba(212, 175, 106, 0.05), transparent);
+}
+.vs-card h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.vs-card.bad-card h4 { color: var(--bad); }
+.vs-card.good-card h4 { color: var(--accent2); }
+.vs-list {
+  list-style: none;
+}
+.vs-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: #c5c5d0;
+  line-height: 1.5;
+}
+.vs-item:last-child { margin-bottom: 0; }
+.vs-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* INTERACTIVE DEMO */
+.interactive-section {
+  padding: 90px 0;
+  background: linear-gradient(180deg, var(--bg), #0b0b10);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.sim-box {
+  max-width: 580px;
+  margin: 0 auto;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  text-align: center;
+}
+.sim-box h4 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.sim-box p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+.sim-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sim-btn {
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  color: inherit;
+}
+.sim-btn:hover {
+  transform: translateY(-2px);
+}
+.sim-btn.good:hover {
+  border-color: rgba(126,231,135,0.3);
+  background: rgba(126,231,135,0.05);
+}
+.sim-btn.mid:hover {
+  border-color: rgba(255,184,77,0.3);
+  background: rgba(255,184,77,0.05);
+}
+.sim-btn.bad:hover {
+  border-color: rgba(255,122,122,0.3);
+  background: rgba(255,122,122,0.05);
+}
+.sim-emoji {
+  font-size: 30px;
+  width: 44px;
+  text-align: center;
+}
+.sim-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.sim-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+.sim-result {
+  margin-top: 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--accent2);
+  display: none;
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* FUTURE VOICE PROMOTION BLOCK */
+.future-voice-ad {
+  padding: 90px 0;
+  border-bottom: 1px solid var(--line);
+}
+.fv-card {
+  padding: 50px;
+  background: linear-gradient(135deg, rgba(212,175,106,0.08), rgba(212,175,106,0.01));
+  border: 1px solid rgba(212,175,106,0.18);
+  border-radius: 32px;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 50px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .fv-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 30px;
+  }
+}
+.fv-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.fv-desc {
+  font-size: 15px;
+  color: #a9a9b8;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.fv-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.fv-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent2), var(--accent));
+  box-shadow: 0 0 50px rgba(212,175,106,0.25);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fv-circle::before, .fv-circle::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,106,0.25);
+  animation: ripple 3s infinite;
+  inset: -20px;
+}
+.fv-circle::after {
+  inset: -40px;
+  animation-delay: 1.5s;
+}
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.fv-link-btn {
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  color: var(--accent2);
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+}
+.fv-link-btn:hover {
+  background: rgba(212, 175, 106, 0.1);
+  transform: translateY(-1px);
+}
+
+/* PRICING & CHECKOUT */
+.pricing {
+  padding: 100px 0;
+  text-align: center;
+}
+.pricing-card {
+  max-width: 480px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, var(--bg2), var(--bg));
+  border: 1px solid rgba(212, 175, 106, 0.25);
+  border-radius: 28px;
+  padding: 48px 36px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  position: relative;
+}
+.price-tag {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 24px 0 12px;
+}
+.price-tag small {
+  font-size: 24px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.price-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+.pricing-features {
+  text-align: left;
+  margin-bottom: 36px;
+  list-style: none;
+}
+.pricing-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #c5c5d0;
+}
+.pricing-feat-item:last-child { margin-bottom: 0; }
+.p-check {
+  color: var(--good);
+  font-weight: bold;
+}
+.buy-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #08080c;
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 30px rgba(212, 175, 106, 0.25);
+}
+.buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(212, 175, 106, 0.45);
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container header-wrap">
+    <div>
+      <div class="logo">ЯСНОСТЬ</div>
+      <div class="tagline">Твой разум в русле изобилия</div>
+    </div>
+    <button class="header-btn" onclick="scrollToPayment()">Активировать — 1490₽</button>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <span class="badge">Непрерывная система изменений</span>
+      <h1 class="hero-title">Удерживайте фокус на важном. <span>Меняйтесь к лучшему</span> каждый день.</h1>
+      <p class="hero-desc">Большинство людей сливаются после 3-4 дней практик, потому что мозг засыпает. Наша система отслеживает ваши мысли в течение дня и плавно возвращает вас в русло изобилия.</p>
+      <div class="cta-group">
+        <button class="main-btn" onclick="scrollToPayment()">Начать изменения за 1490₽</button>
+        <button class="sub-btn" onclick="scrollToDemo()">Попробовать чек-ин</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="phone-mockup">
+        <!-- Красивый лоадер для медленного интернета -->
+        <div class="mockup-loader" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #08080c; z-index: 1; color: var(--accent); font-size: 13px; font-weight: 600; gap: 12px; pointer-events: none; transition: opacity 0.4s ease;">
+          <div style="width: 28px; height: 28px; border: 2px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <span>Загрузка демо...</span>
+        </div>
+        <!-- Фрейм с интерактивным приложением -->
+        <iframe class="phone-screen-img" src="uploads/index.html" onload="hideMockupLoader(this)"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW MINDSET WORKS SECTION -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Как это меняет мышление</span>
+      <h2 class="section-title-big">Что удерживаем в фокусе, то и получаем</h2>
+    </div>
+    <div class="why-grid">
+      <div>
+        <h3 class="why-title">Закон фокуса внимания:<br/>почему коучи бессильны перед ленью?</h3>
+        <p class="why-text">Человеческий мозг устроен так, что <b>95% мыслей в течение дня повторяются на автомате</b>. Большинство людей неосознанно крутят в голове долги, обиды, тревогу перед будущим и страх ошибок.</p>
+        <p class="why-text">Сессии у психологов или видео коучей дают лишь кратковременный всплеск мотивации. Через 3 дня вы засыпаете и возвращаетесь к привычному негативному шуму.</p>
+        <div class="scientific-fact">
+          <strong>Научный факт:</strong> Нейропластичность мозга формируется только через непрерывное микро-повторение. Изменяя фокус внимания каждые несколько часов, вы перестраиваете нейронные связи и выходите на новый уровень.
+        </div>
+      </div>
+      <div>
+        <div class="sim-box" style="text-align: left; background: var(--surface); border: 1px solid var(--line);">
+          <h4 style="color: var(--accent2); margin-bottom: 20px;">Три столпа перепрошивки:</h4>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            <div style="font-size: 24px;">🧠</div>
+            <div>
+              <h5 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Прерывание автоматизма</h5>
+              <p style="font-size: 13px; color: var(--muted);">Система вовремя выдёргивает вас из негативного мысленного потока с помощью микро-вопросов.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            <div style="font-size: 24px;">⚡</div>
+            <div>
+              <h5 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Кризисный протокол</h5>
+              <p style="font-size: 13px; color: var(--muted);">При острой панике, тревоге или лени вы мгновенно переключаетесь на созидание за 60 секунд.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="font-size: 24px;">🎙</div>
+            <div>
+              <h5 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Голосовое программирование</h5>
+              <p style="font-size: 13px; color: var(--muted);">Подсознание полностью доверяет только вашему собственному голосу. Это мощнейший рычаг изменений.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON SECTION -->
+<section class="vs-section">
+  <div class="container">
+    <div class="vs-grid">
+      <!-- BAD SIDE -->
+      <div class="vs-card bad-card">
+        <h4><span class="vs-icon">🌧</span> Без системы «Ясность»</h4>
+        <ul class="vs-list">
+          <li class="vs-item">
+            <span class="vs-icon">✕</span>
+            <div><strong>Быстрый откат:</strong> Коуч мотивирует на пару дней, затем лень затягивает обратно.</div>
+          </li>
+          <li class="vs-item">
+            <span class="vs-icon">✕</span>
+            <div><strong>Эпизодичность:</strong> Вы работаете над собой час в неделю, а остальные 167 часов варитесь в старых тревогах.</div>
+          </li>
+          <li class="vs-item">
+            <span class="vs-icon">✕</span>
+            <div><strong>Отсутствие контроля:</strong> В момент стресса рядом нет инструмента, который быстро вернет вас в ресурс.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- GOOD SIDE -->
+      <div class="vs-card good-card">
+        <h4><span class="vs-icon">🌱</span> С системой «Ясность»</h4>
+        <ul class="vs-list">
+          <li class="vs-item">
+            <span class="vs-icon">✓</span>
+            <div><strong>Удержание состояния:</strong> Мягкий фокус 24/7 не даёт вам уснуть и соскользнуть в привычный негатив.</div>
+          </li>
+          <li class="vs-item">
+            <span class="vs-icon">✓</span>
+            <div><strong>Реализация через фокус:</strong> То, о чём мы думаем большую часть дня, то и реализуется. Мы переводим вас в русло созидания.</div>
+          </li>
+          <li class="vs-item">
+            <span class="vs-icon">✓</span>
+            <div><strong>Всегда под рукой:</strong> Интерактивный тренинг, который помогает здесь и сейчас.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DEMO -->
+<section class="interactive-section" id="demo-checkin">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Попробуй прямо сейчас</span>
+      <h2 class="section-title-big">Интерактивный микро чек-ин</h2>
+    </div>
+    <div class="sim-box">
+      <h4>О чём ты думал последние 5 минут?</h4>
+      <p>Сделай честный выбор, чтобы увидеть, как система перенаправляет твоё состояние</p>
+      
+      <div class="sim-buttons">
+        <button class="sim-btn good" onclick="selectSim('good')">
+          <span class="sim-emoji">🌱</span>
+          <div>
+            <div class="sim-title">В русле изобилия</div>
+            <div class="sim-sub">Развитие, благодарность, фокус на целях</div>
+          </div>
+        </button>
+        <button class="sim-btn mid" onclick="selectSim('mid')">
+          <span class="sim-emoji">⚖️</span>
+          <div>
+            <div class="sim-title">Нейтрально</div>
+            <div class="sim-sub">Текущие дела, быт, задачи без эмоций</div>
+          </div>
+        </button>
+        <button class="sim-btn bad" onclick="selectSim('bad')">
+          <span class="sim-emoji">🌧</span>
+          <div>
+            <div class="sim-title">В русле проблем</div>
+            <div class="sim-sub">Тревога о деньгах, страх за будущее, обиды</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="sim-result" id="sim-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE VOICE REDIRECT BLOCK -->
+<section class="future-voice-ad">
+  <div class="container">
+    <div class="fv-card">
+      <div>
+        <span class="badge" style="background: rgba(212,175,106,0.08); border-color: rgba(212,175,106,0.2);">Внутренний модуль</span>
+        <h3 class="fv-title">Модуль «Future Voice»</h3>
+        <p class="fv-desc">Future Voice — это наше отдельное приложение для записи терапевтического аудио-письма самому себе. Мы создаём ИИ-слепок вашего голоса, который зачитывает вам сценарии идеального будущего. Умная подложка из альфа-волн частотой 8Hz усыпляет бдительность критического ума и внедряет новые установки напрямую в подсознание.</p>
+        <a href="https://futurevoice.pages.dev/" target="_blank" class="fv-link-btn">
+          <span>Записать аудио-письмо во Future Voice</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+      </div>
+      <div class="fv-visual">
+        <div class="fv-circle">
+          <span style="font-size: 32px; z-index: 2;">🎙</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="pricing" id="payment-block">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Активация системы</span>
+      <h2 class="section-title-big">Начните менять жизнь прямо сейчас</h2>
+    </div>
+    
+    <div class="pricing-card">
+      <div class="badge">Пожизненный безлимит</div>
+      <div class="price-tag">1490 <small>₽</small></div>
+      <p class="price-desc">Единоразовый платёж. Без скрытых подписок и доплат.</p>
+      
+      <ul class="pricing-features">
+        <li class="pricing-feat-item">
+          <span class="p-check">✓</span>
+          <span>Полный интерактивный трекинг 24/7</span>
+        </li>
+        <li class="pricing-feat-item">
+          <span class="p-check">✓</span>
+          <span>Умная карта триггеров и аналитика мышления</span>
+        </li>
+        <li class="pricing-feat-item">
+          <span class="p-check">✓</span>
+          <span>Доступ к Кризисному SOS-протоколу</span>
+        </li>
+        <li class="pricing-feat-item">
+          <span class="p-check">✓</span>
+          <span>Интеграция с генератором аудио-писем Future Voice</span>
+        </li>
+        <li class="pricing-feat-item">
+          <span class="p-check">✓</span>
+          <span>Безопасная оплата через ЮKassa</span>
+        </li>
+      </ul>
+
+      <!-- Кнопка оплаты через ЮKassa (Продажи по ссылке) -->
+      <a href="https://yookassa.ru/my/i/" id="yookassa-payment-link" target="_blank" class="buy-btn" style="display: flex; align-items: center; justify-content: center; text-decoration: none; height: 60px; line-height: 60px; font-weight: 700;">
+        Оплатить 1490₽ через ЮKassa
+      </a>
+      <p style="font-size: 11px; color: var(--muted-2); margin-top: 14px;">Безопасное соединение. После оплаты вы мгновенно получите доступ к системе.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 ЯСНОСТЬ. Все права защищены.</p>
+    <p style="margin-top: 8px; font-size: 11px;">Используя приложение, вы соглашаетесь с условиями оферты и политикой конфиденциальности. Настоящее приложение создано для саморазвития и не заменяет медицинскую психотерапию.</p>
+  </div>
+</footer>
+
+<script>
+function hideMockupLoader(iframe) {
+  const loader = iframe.previousElementSibling;
+  if (loader && loader.classList.contains('mockup-loader')) {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 400);
+  }
+}
+
+function scrollToPayment() {
+  document.getElementById('payment-block').scrollIntoView({ behavior: 'smooth' });
+}
+function scrollToDemo() {
+  document.getElementById('demo-checkin').scrollIntoView({ behavior: 'smooth' });
+}
+
+function selectSim(type) {
+  const resultDiv = document.getElementById('sim-result');
+  resultDiv.style.display = 'block';
+  
+  if (type === 'good') {
+    resultDiv.innerHTML = `
+      <div style="color: var(--good); font-weight:600; margin-bottom: 6px;">Отлично! Вы закрепили фокус изобилия.</div>
+      <div style="font-size: 13px; color: var(--muted);">Система зафиксировала ваше состояние и добавила +12% к стабильности сегодняшнего дня. Продолжайте в том же духе!</div>
+    `;
+  } else if (type === 'mid') {
+    resultDiv.innerHTML = `
+      <div style="color: var(--warn); font-weight:600; margin-bottom: 6px;">Состояние стабильно, но вы на автопилоте.</div>
+      <div style="font-size: 13px; color: var(--muted);">Приложение предлагает сделать микро-настройку прямо сейчас, чтобы плавно перевести фокус с рутинных дел на поиск возможностей.</div>
+    `;
+  } else if (type === 'bad') {
+    resultDiv.innerHTML = `
+      <div style="color: var(--bad); font-weight:600; margin-bottom: 6px;">⚠️ Внимание! Вы провалились в русло проблем.</div>
+      <div style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Система обнаружила деструктивный паттерн тревоги или страха. Предлагаем запустить Кризисный Протокол.</div>
+      <button onclick="scrollToPayment()" style="background: rgba(255,122,122,0.15); border: 1px solid var(--bad); color: var(--bad); padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer; border: none; font-weight: 600;">Запустить Кризисный Протокол</button>
+    `;
+  }
+}
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0445e7fe8e35d85',t:'MTc4MDIxMzYzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
