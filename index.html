@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#08080c" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json">
+  <title>"Я Ясность — я светлюсь"</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class=""phone">
+  <!-- PAYWALL -->
+  <div id="paywall" style="display:none; position:absolute; inset:0; background:#08080c; z-index:300; padding:40px 24px; text-align:center;">
+    <div style="margin-top:60px;">
+      <div style="font-size:64px; margin-bottom:20px;">🌟</div>
+      <h1 style="font-size:32px; font-weight:700; margin-bottom:12px;">Я Ясность</h1>
+      <p style="color:#8a8a9c; font-size:16px; margin-bottom:40px;">"Полный доступ навсегда"</p>
+      
+      <div style="background:#111; border-radius:24px; padding:32px 24px; margin-bottom:30px;">
+        <div style="font-size:48px; font-weight:700; color:#d4af6a;">1490 ₽</div>
+        <div style="color:#5a5a6a; margin-top:8px;">одноразовый платёж</div>
+      </div>
+      
+      <button onclick="payWithYooKassa()" 
+              style="width:100%; background:#d4af6a; color:#08080c; font-weight:700; padding:20px; border-radius:20px; font-size:18px;">
+        Оплатить и получить доступ
+      </button>
+      
+      <div style="margin-top:16px; font-size:12px; color:#5a5a6a;">ЮKassa · 1369960</div>
+    </div>
+  </div>">
+  <div class="""demo-tag" style="display:none" logo-glow"">""Я Ясность""</div>
+
+  <!-- TODAY SCREEN -->
+  <section class="screen active" id="screen-today">
+    <div class="status-bar"><span id="time">9:41</span><span>●●●●</span></div>
+    <div class="head">
+      <div>
+        <div class="greeting">Доброе утро,</div>
+        <div class="greeting-name" id="user-name">Александр</div>
+      </div>
+      <div class=""head-actions">
+        <div class="logo">
+          <span class="""logo-letter">Я<br><span style="font-size:14px; font-weight:500; color:#f7f7fb;">Ясность</span>"">Я</span>
+        </div>">
+        <button class="icon-btn" onclick="openCheckin()" aria-label="Состояние">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9 15c.5.5 1.5 1.5 3 1.5s2.5-1 3-1.5"/></svg>
+        </button>
+        <button class="icon-btn" onclick="show('screen-settings')" aria-label="Настройки">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="state-card">
+      <div class="state-label">Состояние дня</div>
+      <div class="state-value" id="state-value">62<small>%</small></div>
+      <div class="state-sub" id="state-sub">в русле изобилия</div>
+      <div class="state-progress"><div class="state-progress-bar" id="state-bar" style="width:62%"></div></div>
+      <div class="state-meta">
+        <span>Цель: 95%</span>
+        <span id="state-delta">+12% к вчера</span>
+      </div>
+    </div>
+
+    <div class="section-title">Сегодня</div>
+    <div class="actions" id="actions-list">
+      <!-- JS populated -->
+    </div>
+
+    <div class="quick-row">
+      <button class="quick-btn sos" onclick="crisisProtocol()">
+        <div class="qb-icon">🆘</div>
+        <div class="qb-title">Кризисный протокол</div>
+        <div class="qb-sub">Вернуться в ресурс за 60 сек</div>
+      </button>
+      <button class="quick-btn silent" onclick="toggleSilentMode()">
+        <div class="qb-icon">🤫</div>
+        <div class="qb-title">Тихий режим</div>
+        <div class="qb-sub">До конца дня</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- MAP SCREEN -->
+  <section class="screen" id="screen-map">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="map-head">
+      <div class="map-title">Карта мышления</div>
+      <div class="map-sub">Твой день в данных</div>
+    </div>
+    <div class="day-pct">
+      <div class="day-pct-value" id="day-pct">62%</div>
+      <div class="day-pct-label">времени в русле изобилия</div>
+      <div class="day-pct-delta">↑ 12% к вчера</div>
+    </div>
+    <!-- Остальной контент карты (упрощён для brevity) -->
+    <div class="timeline">
+      <div class="tl-title">Часы дня</div>
+      <div class="tl-bars" id="timeline-bars"></div>
+    </div>
+  </section>
+
+  <!-- VOICE SCREEN -->
+  <section class="screen" id="screen-voice">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="voice-head">
+      <div class="voice-title">Письмо из будущего</div>
+      <div class="voice-name">Утро в новом доме</div>
+      <div class="voice-meta">8 мин · твой голос</div>
+    </div>
+
+    <div class="voice-player">
+      <div class="voice-visual"></div>
+      <div class="voice-controls">
+        <button class="voice-ctrl" onclick="skipVoice(-15)">-15</button>
+        <button class="voice-ctrl main" id="playBtn">
+          <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="voice-ctrl" onclick="skipVoice(15)">+15</button>
+      </div>
+      <div class="voice-progress"><div class="voice-progress-fill" id="progress-fill"></div></div>
+      <div class="voice-time"><span id="current-time">0:00</span><span>8:00</span></div>
+    </div>
+
+    <div class="voice-text">
+      Привет. Это я, говорю с тобой из 30 мая 2027 года...
+    </div>
+
+    <div style="padding: 0 20px; margin-top: 20px;">
+      <button onclick="startVoiceRecording()" class="action-card" style="width:100%; justify-content:center; background:var(--accent); color:#08080c; font-weight:600;">
+        🎙 Записать новое письмо
+      </button>
+    </div>
+  </section>
+
+  <!-- PATH + SETTINGS screens remain similar (shortened for demo) -->
+  <section class="screen" id="screen-path">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="path-head"><div class="map-title">Твой путь</div></div>
+    <div class="path-progress">
+      <div class="path-day-big">22 <small>/ 90</small></div>
+      <div class="path-stage">Этап 2 · Удержание состояния</div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-settings">
+    <div class="status-bar"><span>9:41</span><span>●●●●</span></div>
+    <div class="settings-head"><div class="map-title">Настройки</div></div>
+    <div class=""settings-list">
+      <!-- Payment / Subscription -->
+      <div class="set-group">
+        <div class="set-row" style="flex-direction:column; align-items:flex-start; gap:12px; padding:20px 18px;">
+          <div style="display:flex; align-items:center; width:100%;">
+            <div class="set-icon">💎</div>
+            <div class="set-text" style="flex:1;">
+              <div class="set-name">Подписка Pro</div>
+              <div class="set-desc">Полный доступ к приложению</div>
+            </div>
+            <div style="color:#7ee787; font-weight:600;">Активна</div>
+          </div>
+          
+          <button onclick="payWithYooKassa()" 
+                  style="width:100%; background:#d4af6a; color:#08080c; font-weight:700; padding:16px; border-radius:16px; font-size:16px; margin-top:8px;">
+            Продлить подписку — 1490 ₽
+          </button>
+          <div style="font-size:11px; color:#5a5a6a; text-align:center; width:100%;">ЮKassa · 1369960</div>
+        </div>
+      </div>">
+      <div class="set-group">
+        <div class="set-row"><div class="set-icon">🎙</div><div class="set-text"><div class="set-name">Твой голос</div></div><div style="color:#7ee787">●</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECK-IN MODAL -->
+  <div class="modal" id="checkin">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3>О чём ты думал<br/>последние 5 минут?</h3>
+      <div class="checkin-buttons">
+        <button class="checkin-btn good" onclick="submitCheckin('good')">
+          <div class="checkin-emoji">🌱</div>
+          <div class="checkin-text-wrap"><div class="checkin-title">В русле изобилия</div></div>
+        </button>
+        <button class="checkin-btn mid" onclick="submitCheckin('mid')">
+          <div class="checkin-emoji">⚖️</div>
+          <div class="checkin-text-wrap"><div class="checkin-title">Нейтрально</div></div>
+        </button>
+        <button class="checkin-btn bad" onclick="submitCheckin('bad')">
+          <div class="checkin-emoji">🌧</div>
+          <div class="checkin-text-wrap"><div class="checkin-title">В русле проблем</div></div>
+        </button>
+      </div>
+      <button class="sheet-close" onclick="closeCheckin()">Позже</button>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <nav class="tabs">
+    <button class="tab active" onclick="show('screen-today',this)"><span>Сегодня</span></button>
+    <button class="tab" onclick="show('screen-map',this)"><span>Карта</span></button>
+    <button class="tab" onclick="show('screen-voice',this)"><span>Голос</span></button>
+    <button class="tab" onclick="show('screen-path',this)"><span>Путь</span></button>
+    <button class="tab" onclick="show('screen-settings',this)"><span>Ещё</span></button>
+  </nav>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
