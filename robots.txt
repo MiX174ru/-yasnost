@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /.well-known/
+
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&fbclid&gclid&yclid
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+Sitemap: https://yasnost.vercel.app/sitemap.xml
+Host: yasnost.vercel.app
